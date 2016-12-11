@@ -13,7 +13,7 @@
 
             <!-- ENABLE THESE FOR MySQL/MariaDB -->
             <!-- Change the "nucleus" to your database name, and the user/password -->
-            <property name="javax.jdo.option.ConnectionURL" value="jdbc:mysql://192.168.2.18/movie_snop?useServerPrepStmts=false"/>
+            <property name="javax.jdo.option.ConnectionURL" value="jdbc:mysql://192.168.2.18/movie_snop?useServerPrepStmts=false&amp;characterEncoding=UTF-8"/>
             <property name="javax.jdo.option.ConnectionDriverName" value="com.mysql.jdbc.Driver"/>
             <property name="javax.jdo.option.ConnectionUserName" value="root"/>
             <property name="javax.jdo.option.ConnectionPassword" value="root"/>
