@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" version="1.0">
+
+    <!-- Tutorial "unit" -->
+    <persistence-unit name="Tutorial">
+        <class>com.cpt.movie.pojo.Login</class>
+        <class>com.cpt.movie.pojo.MovieTicke</class>
+        <class>com.cpt.movie.pojo.SnapRecord</class>
+        <exclude-unlisted-classes/>
+        <properties>
+
+            <!-- ENABLE THESE FOR MySQL/MariaDB -->
+            <!-- Change the "nucleus" to your database name, and the user/password -->
+            <property name="javax.jdo.option.ConnectionURL" value="jdbc:mysql://192.168.2.18/movie_snop?useServerPrepStmts=false"/>
+            <property name="javax.jdo.option.ConnectionDriverName" value="com.mysql.jdbc.Driver"/>
+            <property name="javax.jdo.option.ConnectionUserName" value="root"/>
+            <property name="javax.jdo.option.ConnectionPassword" value="root"/>
+            <property name="javax.jdo.option.Mapping" value="mysql"/>
+
+            <property name="datanucleus.schema.autoCreateAll" value="true"/>
+        </properties>
+    </persistence-unit>
+
+</persistence>
