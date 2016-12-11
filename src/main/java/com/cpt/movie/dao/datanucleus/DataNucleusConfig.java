@@ -17,7 +17,7 @@ public class DataNucleusConfig {
 
     /**
      * 产生PersistenceManagerFactory Bean
-     * @return
+     * @return PersistenceManagerFactory对象
      */
     @Bean
     public PersistenceManagerFactory getPersistenceManagerFactory(){

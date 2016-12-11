@@ -31,13 +31,13 @@ public interface LoginDao {
 
     /**根据用户名选择用户
      * @param username 用户名
-     * @return
+     * @return 用户对象
      */
     Login selectByUsername(String username);
 
     /**根据电子邮箱选择用户
      * @param email 电子邮箱
-     * @return
+     * @return 用户对象
      */
     Login selectByEmail(String email);
 }

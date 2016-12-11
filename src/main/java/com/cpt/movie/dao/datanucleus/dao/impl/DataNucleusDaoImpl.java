@@ -73,7 +73,7 @@ public class DataNucleusDaoImpl implements DataNucleusDao {
         Object id=null;
         try	{
             tx.begin();
-            Object result = pm.makePersistent(object);
+            pm.makePersistent(object);
             tx.commit();
             id=getObjectId(object);
         } catch (Exception e) {
@@ -146,7 +146,7 @@ public class DataNucleusDaoImpl implements DataNucleusDao {
      * 获取对象主键值
      * @param object 数据对象
      * @return 主键对象
-     * @throws IllegalAccessException
+     * @throws IllegalAccessException 非法访问异常
      */
     private Object getObjectId(Object object) throws IllegalAccessException {
 
