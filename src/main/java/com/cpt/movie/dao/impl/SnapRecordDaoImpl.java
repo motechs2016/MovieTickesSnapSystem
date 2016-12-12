@@ -45,4 +45,11 @@ public class SnapRecordDaoImpl implements SnapRecordDao {
         List<SnapRecord> snapRecords = dataNucleusDao.selectByQuery(SnapRecord.class, query);
         return snapRecords;
     }
+
+    @Override
+    public List<SnapRecord> selectByUidAndMovieId(int uid, int movieId) {
+        String query="uid=="+uid+" and movieId=="+movieId;
+        List<SnapRecord> snapRecords = dataNucleusDao.selectByQuery(SnapRecord.class, query);
+        return snapRecords;
+    }
 }

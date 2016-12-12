@@ -2,6 +2,8 @@ package com.cpt.movie.dao;
 
 import com.cpt.movie.pojo.MovieTicke;
 
+import java.util.List;
+
 /**
  * 电影票表持久层
  * Created by cpt72 on 2016/12/11.
@@ -29,4 +31,9 @@ public interface MovieTickeDao {
      */
     MovieTicke selectById(int id);
 
+    /**
+     * 获取所有电影票
+     * @return 电影票对象列表
+     */
+    List<MovieTicke> selectAll();
 }

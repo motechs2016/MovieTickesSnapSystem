@@ -42,4 +42,11 @@ public interface SnapRecordDao {
      * @return 抢购记录
      */
     List<SnapRecord> selectByMovieId(int movieId);
+
+    /**根据电影编号选择抢购记录
+     * @param uid 用户编号
+     * @param movieId 电影编号
+     * @return 抢购记录
+     */
+    List<SnapRecord> selectByUidAndMovieId(int uid,int movieId);
 }

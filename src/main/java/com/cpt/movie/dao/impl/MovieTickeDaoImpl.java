@@ -32,4 +32,9 @@ public class MovieTickeDaoImpl implements MovieTickeDao {
         return dataNucleusDao.selectByPrimaryKey(MovieTicke.class,id);
     }
 
+    @Override
+    public List<MovieTicke> selectAll() {
+        return dataNucleusDao.selectByQuery(MovieTicke.class,"");
+    }
+
 }
