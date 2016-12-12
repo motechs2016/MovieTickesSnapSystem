@@ -80,9 +80,10 @@ public class SnapServiceImpl implements SnapService {
         MovieDTO movieDTO=new MovieDTO();
         MovieTicke movieTicke = movieTickeDao.selectById(movieId);
         movieDTO.setMovieTicke(movieTicke);
-        movieDTO.setNowTime(new Date());
+
         if (movieTicke!=null){
             Date date = new Date();
+            movieDTO.setNowTime(date);
             if(movieTicke.getStartTime().before(date)&&movieTicke.getEndTime().after(date)){
                 movieDTO.setMd5(getMovieMd5(movieId));
             }

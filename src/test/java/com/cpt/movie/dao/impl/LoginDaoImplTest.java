@@ -30,10 +30,10 @@ public class LoginDaoImplTest {
 
     @Test
     public void update() throws Exception {
-//        Login login =loginDao.selectById(45);
-//        System.out.println(login);
-//        login.setPassword("0000000");
-//        System.out.println(loginDao.update(login));
+        Login login =loginDao.selectById(45);
+        System.out.println(login);
+        login.setPassword("0000000");
+        System.out.println(loginDao.update(login));
     }
 
     @Test
@@ -45,7 +45,7 @@ public class LoginDaoImplTest {
 
     @Test
     public void selectByUsername() throws Exception {
-        Login login =loginDao.selectByUsername("cpt");
+        Login login =loginDao.selectByUsername("hcx");
         System.out.println(login);
     }
     @Test
