@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>电影票抢购详情</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div th:if="${movieTicke}">
+    <h1 th:text="${movieTicke.name} " ></h1>
+    <h4 th:text="${movieTicke.num}"></h4>
+    <h4 th:text="${#dates.format(movieTicke.addTime, 'yyyy-MM-dd HH:mm:ss')}"></h4>
+    <h4 th:text="${#dates.format(movieTicke.startTime, 'yyyy-MM-dd HH:mm:ss')}"></h4>
+    <h4 th:text="${#dates.format(movieTicke.endTime, 'yyyy-MM-dd HH:mm:ss')}"></h4>
+</div>
+<div th:if="${error}">
+    <h4 th:text="${error} " ></h4>
+</div>
+</body>
+</html>

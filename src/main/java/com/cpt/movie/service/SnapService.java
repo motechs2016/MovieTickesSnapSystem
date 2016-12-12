@@ -38,7 +38,7 @@ public interface SnapService {
      * @param movieId 电影票编号
      * @return 电影票服务层DTO
      */
-    MovieDTO MovieTicke(int movieId);
+    MovieDTO getMovieTicke(int movieId);
 
     /**
      * 获取所有电影票抢购信息

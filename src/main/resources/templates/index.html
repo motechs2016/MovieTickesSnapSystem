@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>电影票抢购系统</title>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css"/>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="panel">
+        <div class="panel-heading">
+            <h1 style="display: inline-block; text-align: center">电影票抢购列表</h1>
+            <div style="display: inline-block; text-align: right;">
+                <label>用户:<span id="user"></span></label>
+            </div>
+        </div>
+        <div class="panel-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>电影名称</th>
+                    <th>剩余数量</th>
+                    <!--<th>添加时间</th>-->
+                    <th>开始时间</th>
+                    <th>结束时间</th>
+                    <th>活动详情</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr th:each="ticke:${movieTickes} ">
+                    <th th:text="${ticke.name}"></th>
+                    <th th:text="${ticke.num}"></th>
+                    <!--<th th:text="${#dates.format(ticke.addTime, 'yyyy-MM-dd HH:mm:ss')}"></th>-->
+                    <th th:text="${#dates.format(ticke.startTime, 'yyyy-MM-dd HH:mm:ss')}"></th>
+                    <th th:text="${#dates.format(ticke.endTime, 'yyyy-MM-dd HH:mm:ss')}"></th>
+                    <th><a th:href="'/movie/'+${ticke.id}" href="" class="btn btn-info">点击查看</a></th>
+                </tr>
+                <!--<tr>-->
+                <!--<th>1</th>-->
+                <!--<th>2</th>-->
+                <!--<th>3</th>-->
+                <!--<th>4</th>-->
+                <!--<th>5</th>-->
+                <!--<th><a href="#" class="btn btn-info">点击查看</a></th>-->
+                <!--</tr>-->
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- 弹出层 -->
+<div class="modal fade" id="userInfo">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">请登录</h3>
+            </div>
+            <div class="modal-body">
+                <form class="form-inline" role="form">
+                    <div class="form-group">
+                        <label class="sr-only" for="email">邮箱</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email"/>
+                    </div>
+                    <a id="submit" class="btn btn-primary">登录</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '/checkLogin',
+            type: 'get',
+            dataType: "json",
+            success: function (result) {
+                if(result.status){
+                    $("#user").html(result.data);
+                }
+                else{
+                    var userinfo = $("#userInfo");
+                    userinfo.modal({
+                        show: true,
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                }
+            },
+            error: function () {
+                console.error("checkLogin error!");
+            }
+        });
+
+        $("#submit").click(function () {
+            var email = $("#email").val();
+            $.ajax({
+                url: '/login',
+                data: {email: email},
+                type: 'post',
+                dataType: "json",
+                success: function () {
+                    $("#user").html(email);
+                    var userinfo = $("#userInfo");
+                    userinfo.modal('hide');
+                },
+                error: function () {
+                    console.error("login error!");
+                }
+            });
+        });
+    });
+
+</script>
+</body>
+</html>

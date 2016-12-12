@@ -16,15 +16,16 @@ public class SnapMessageDto {
     /**
      * 抢购信息
      */
-    private SnapResultEnum message;
-
+    private String message;
+    private String code;
     private List<SnapRecord> snapRecords;
 
     /**
      * @param resultEnum 抢购结果枚举
      */
     public SnapMessageDto(SnapResultEnum resultEnum) {
-        this.message=resultEnum;
+        this.message=resultEnum.value();
+        this.code=resultEnum.toString();
         if(resultEnum==SnapResultEnum.SUCCESS)
             this.status=true;
         else
@@ -45,12 +46,20 @@ public class SnapMessageDto {
         this.status = status;
     }
 
-    public SnapResultEnum getMessage() {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(SnapResultEnum message) {
+    public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public List<SnapRecord> getSnapRecords() {

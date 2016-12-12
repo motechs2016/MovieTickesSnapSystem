@@ -11,6 +11,7 @@ import com.cpt.movie.pojo.SnapRecord;
 import com.cpt.movie.service.SnapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import java.util.Date;
@@ -19,6 +20,7 @@ import java.util.List;
 /**
  * Created by cpt72 on 2016/12/12.
  */
+@Service
 public class SnapServiceImpl implements SnapService {
     @Autowired
     @Qualifier("snopProcesureDaoImpl")
@@ -65,22 +67,23 @@ public class SnapServiceImpl implements SnapService {
         if(snapRecords!=null&&snapRecords.size()>0)
         {
             //已经参与抢购
-            return new SnapMessageDto(SnapResultEnum.REPEAT_SNOP);
+            return new SnapMessageDto(SnapResultEnum.REPEAT_SNOP,snapRecords);
         }
         //执行抢购 默认数量1
         int result=snopProcesureDao.callSnopProc(uid,movieId,num);
 
-        return  new SnapMessageDto(SnapResultEnum.getStatus(result));
+        return  new SnapMessageDto(SnapResultEnum.getStatus(result),snapRecordDao.selectByUidAndMovieId(uid, movieId));
     }
 
     @Override
-    public MovieDTO MovieTicke(int movieId) {
+    public MovieDTO getMovieTicke(int movieId) {
         MovieDTO movieDTO=new MovieDTO();
         MovieTicke movieTicke = movieTickeDao.selectById(movieId);
         movieDTO.setMovieTicke(movieTicke);
+        movieDTO.setNowTime(new Date());
         if (movieTicke!=null){
             Date date = new Date();
-            if(movieTicke.getStartTime().after(date)&&movieTicke.getEndTime().after(date)){
+            if(movieTicke.getStartTime().before(date)&&movieTicke.getEndTime().after(date)){
                 movieDTO.setMd5(getMovieMd5(movieId));
             }
         }

@@ -40,8 +40,4 @@ public enum SnapResultEnum {
         return null;
     }
 
-    @Override
-    public String toString() {
-        return _value;
-    }
 }
