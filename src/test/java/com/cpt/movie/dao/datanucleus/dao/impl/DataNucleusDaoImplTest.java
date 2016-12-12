@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by cpt72 on 2016/12/11.
@@ -29,10 +31,10 @@ public class DataNucleusDaoImplTest {
 
     @Test
     public void selectByQuery() throws Exception {
-        List<Login> logins = dataNucleusDao.selectByQuery(Login.class, "username=='hcx'");
-        for (Login login:logins){
-            System.out.println(login);
-        }
+//        List<Login> logins = dataNucleusDao.selectByQuery(Login.class, "username=='hcx'");
+//        for (Login login:logins){
+//            System.out.println(login);
+//        }
     }
 
     @Test
@@ -62,5 +64,14 @@ public class DataNucleusDaoImplTest {
 //        boolean b = dataNucleusDao.deleteByPrimaryKey(Login.class, 47);
 //        System.out.println(b);
     }
-
+    @Test
+    public void callProc() throws Exception {
+//        Map<String,Object> params=new HashMap<>();
+//        params.put("v_uid",46);
+//        params.put("v_movie_id",1);
+//        params.put("v_num",1);
+//        params.put("r_result",0);
+//        Object snop_proc = dataNucleusDao.callProc("snop_proc", params);
+//        System.out.println("snop_proc:"+snop_proc);
+    }
 }

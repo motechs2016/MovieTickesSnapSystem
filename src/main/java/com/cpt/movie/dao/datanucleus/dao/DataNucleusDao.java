@@ -1,6 +1,8 @@
 package com.cpt.movie.dao.datanucleus.dao;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * DataNucleus持久层接口
@@ -51,4 +53,13 @@ public interface DataNucleusDao {
      * @return 删除状态
      */
     <T> boolean deleteByPrimaryKey(Class<T> var, Object key);
+
+    /**
+     * 调用存储过程
+     * @param query 存储过程名称
+     * @param params 存储过程参数 只能包含r_result一个返回参数
+     * @return 查询到的记录列表，没有记录为null
+     */
+    Object callProc(String query, Map<String,Object> params);
+
 }
