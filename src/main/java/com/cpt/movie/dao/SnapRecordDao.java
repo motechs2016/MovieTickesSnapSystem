@@ -28,8 +28,6 @@ public interface SnapRecordDao {
     // 更新缓存之前先删除
     @Caching(evict = {
             @CacheEvict(value = "SnapRecord", key = "'SnapRecord-id:'+#snapRecord.id", beforeInvocation = true),
-            @CacheEvict(value = "SnapRecord", key = "'SnapRecord-uid:'+#snapRecord.uid", beforeInvocation = true),
-            @CacheEvict(value = "SnapRecord", key = "'SnapRecord-movieId:'+#snapRecord.movieId", beforeInvocation = true),
             @CacheEvict(value = "SnapRecord", key = "'SnapRecord-uid-movieId:'+#snapRecord.uid+'-'+#snapRecord.movieId", beforeInvocation = true)
     })
     boolean update(SnapRecord snapRecord);
@@ -46,14 +44,12 @@ public interface SnapRecordDao {
      * @param uid 用户编号
      * @return 抢购记录
      */
-    @Cacheable(value = "SnapRecord", key = "'SnapRecord-uid:'+#uid")
     List<SnapRecord> selectByUid(int uid);
 
     /**根据电影编号选择抢购记录
      * @param movieId 电影编号
      * @return 抢购记录
      */
-    @Cacheable(value = "SnapRecord", key = "'SnapRecord-movieId:'+#movieId")
     List<SnapRecord> selectByMovieId(int movieId);
 
     /**根据电影编号选择抢购记录
@@ -62,5 +58,5 @@ public interface SnapRecordDao {
      * @return 抢购记录
      */
     @Cacheable(value = "SnapRecord", key = "'SnapRecord-uid-movieId:'+#uid+'-'+#movieId") // 从数据库拿到结果存入缓存，下次直接拿缓存
-    List<SnapRecord> selectByUidAndMovieId(int uid,int movieId);
+    SnapRecord selectByUidAndMovieId(int uid,int movieId);
 }

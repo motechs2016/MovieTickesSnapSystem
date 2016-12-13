@@ -1,6 +1,7 @@
 package com.cpt.movie.pojo;
 
 import javax.jdo.annotations.*;
+import java.io.Serializable;
 import java.util.Date;
 
 
@@ -21,7 +22,7 @@ import java.util.Date;
  */
 
 @PersistenceCapable(table="login")
-public class Login  {
+public class Login  implements Serializable{
 
 	/**
 	 * 用户编号

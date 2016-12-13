@@ -17,6 +17,7 @@ public class SnapRecordDaoImpl implements SnapRecordDao {
     @Autowired
     @Qualifier("dataNucleusDaoImpl")
     private DataNucleusDao dataNucleusDao;
+
     @Override
     public int insert(SnapRecord snapRecord) {
         return (int) dataNucleusDao.insert(snapRecord);
@@ -29,27 +30,30 @@ public class SnapRecordDaoImpl implements SnapRecordDao {
 
     @Override
     public SnapRecord selectById(int id) {
-        return dataNucleusDao.selectByPrimaryKey(SnapRecord.class,id);
+        return dataNucleusDao.selectByPrimaryKey(SnapRecord.class, id);
     }
 
     @Override
     public List<SnapRecord> selectByUid(int uid) {
-        String query="uid=="+uid;
+        String query = "uid==" + uid;
         List<SnapRecord> snapRecords = dataNucleusDao.selectByQuery(SnapRecord.class, query);
         return snapRecords;
     }
 
     @Override
-    public List<SnapRecord> selectByMovieId( int movieId) {
-        String query=" movieId=="+movieId;
+    public List<SnapRecord> selectByMovieId(int movieId) {
+        String query = " movieId==" + movieId;
         List<SnapRecord> snapRecords = dataNucleusDao.selectByQuery(SnapRecord.class, query);
         return snapRecords;
     }
 
     @Override
-    public List<SnapRecord> selectByUidAndMovieId(int uid, int movieId) {
-        String query="uid=="+uid+" && movieId=="+movieId;
+    public SnapRecord selectByUidAndMovieId(int uid, int movieId) {
+        String query = "uid==" + uid + " && movieId==" + movieId;
         List<SnapRecord> snapRecords = dataNucleusDao.selectByQuery(SnapRecord.class, query);
-        return snapRecords;
+        if (snapRecords == null || snapRecords.isEmpty())
+            return null;
+        else
+            return snapRecords.get(0);
     }
 }

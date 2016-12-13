@@ -18,26 +18,28 @@ public class SnapMessageDto {
      */
     private String message;
     private String code;
-    private List<SnapRecord> snapRecords;
+    private SnapRecord snapRecord;
 
     /**
      * @param resultEnum 抢购结果枚举
      */
     public SnapMessageDto(SnapResultEnum resultEnum) {
-        this.message=resultEnum.value();
-        this.code=resultEnum.toString();
-        if(resultEnum==SnapResultEnum.SUCCESS)
-            this.status=true;
+        this.message = resultEnum.value();
+        this.code = resultEnum.toString();
+        if (resultEnum == SnapResultEnum.SUCCESS)
+            this.status = true;
         else
-            this.status=false;
+            this.status = false;
     }
+
     /**
      * @param resultEnum 抢购结果枚举
      */
-    public SnapMessageDto(SnapResultEnum resultEnum,List<SnapRecord> snapRecords) {
+    public SnapMessageDto(SnapResultEnum resultEnum, SnapRecord snapRecord) {
         this(resultEnum);
-        this.snapRecords=snapRecords;
+        this.snapRecord = snapRecord;
     }
+
     public boolean isStatus() {
         return status;
     }
@@ -62,11 +64,11 @@ public class SnapMessageDto {
         this.code = code;
     }
 
-    public List<SnapRecord> getSnapRecords() {
-        return snapRecords;
+    public SnapRecord getSnapRecord() {
+        return snapRecord;
     }
 
-    public void setSnapRecords(List<SnapRecord> snapRecords) {
-        this.snapRecords = snapRecords;
+    public void setSnapRecord(SnapRecord snapRecord) {
+        this.snapRecord = snapRecord;
     }
 }

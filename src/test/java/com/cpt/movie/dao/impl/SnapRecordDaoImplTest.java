@@ -33,7 +33,7 @@ public class SnapRecordDaoImplTest {
 
     @Test
     public void update() throws Exception {
-//        SnapRecord snapRecord =snapRecordDao.selectById(5);
+//        SnapRecord snapRecord =snapRecordDao.selectById(33);
 //        System.out.println(snapRecord);
 //        snapRecord.setNum(1);
 //        System.out.println(snapRecordDao.update(snapRecord));
@@ -41,13 +41,13 @@ public class SnapRecordDaoImplTest {
 
     @Test
     public void selectById() throws Exception {
-        SnapRecord snapRecord =snapRecordDao.selectById(2);
+        SnapRecord snapRecord =snapRecordDao.selectById(33);
         System.out.println(snapRecord);
     }
 
     @Test
     public void selectByUid() throws Exception {
-        List<SnapRecord> snapRecords =snapRecordDao.selectByUid(45);
+        List<SnapRecord> snapRecords =snapRecordDao.selectByUid(1);
         for (SnapRecord snapRecord:snapRecords)
             System.out.println(snapRecord);
     }
@@ -56,5 +56,10 @@ public class SnapRecordDaoImplTest {
         List<SnapRecord> snapRecords =snapRecordDao.selectByMovieId(1);
         for (SnapRecord snapRecord:snapRecords)
             System.out.println(snapRecord);
+    }
+    @Test
+    public void selectByUidAndMovieId() throws Exception {
+        SnapRecord snapRecord =snapRecordDao.selectByUidAndMovieId(1,1);
+        System.out.println(snapRecord);
     }
 }

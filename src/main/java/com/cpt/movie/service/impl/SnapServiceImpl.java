@@ -62,12 +62,12 @@ public class SnapServiceImpl implements SnapService {
             //抢购已经结束
             return new SnapMessageDto(SnapResultEnum.SNAP_CLOSED);
         }
-        List<SnapRecord> snapRecords = snapRecordDao.selectByUidAndMovieId(uid, movieId);
+        SnapRecord snapRecord = snapRecordDao.selectByUidAndMovieId(uid, movieId);
 
-        if(snapRecords!=null&&snapRecords.size()>0)
+        if(snapRecord!=null)
         {
             //已经参与抢购
-            return new SnapMessageDto(SnapResultEnum.REPEAT_SNOP,snapRecords);
+            return new SnapMessageDto(SnapResultEnum.REPEAT_SNOP,snapRecord);
         }
         //执行抢购 默认数量1
         int result=snopProcesureDao.callSnopProc(uid,movieId,num);

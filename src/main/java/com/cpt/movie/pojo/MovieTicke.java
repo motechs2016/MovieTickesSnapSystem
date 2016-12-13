@@ -1,6 +1,7 @@
 package com.cpt.movie.pojo;
 
 import javax.jdo.annotations.*;
+import java.io.Serializable;
 import java.util.Date;
 
 
@@ -21,7 +22,7 @@ import java.util.Date;
  * 
  */
 @PersistenceCapable(table="movie_tickes")
-public class MovieTicke {
+public class MovieTicke  implements Serializable {
 
 	/**
 	 * 电影票编号

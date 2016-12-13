@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 /**
  * Created by cpt72 on 2016/12/11.
  */
@@ -32,7 +34,7 @@ public class MovieTickeDaoImplTest {
     public void update() throws Exception {
 //        MovieTicke movieTicke =movieTickeDao.selectById(1);
 //        System.out.println(movieTicke);
-//        movieTicke.setName("功夫");
+//        movieTicke.setName("功夫2");
 //        System.out.println(movieTickeDao.update(movieTicke));
     }
 
@@ -40,6 +42,13 @@ public class MovieTickeDaoImplTest {
     public void selectById() throws Exception {
         MovieTicke movieTicke =movieTickeDao.selectById(1);
         System.out.println(movieTicke.getName());
+    }
+    @Test
+    public void selectAll() throws Exception {
+        List<MovieTicke> movieTickes = movieTickeDao.selectAll();
+        for (MovieTicke ticke:movieTickes){
+            System.out.println(ticke);
+        }
     }
 
 }

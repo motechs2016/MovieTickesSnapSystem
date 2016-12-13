@@ -30,10 +30,10 @@ public class LoginDaoImplTest {
 
     @Test
     public void update() throws Exception {
-        Login login =loginDao.selectById(45);
-        System.out.println(login);
-        login.setPassword("0000000");
-        System.out.println(loginDao.update(login));
+//        Login login =loginDao.selectById(45);
+//        System.out.println(login);
+//        login.setPassword("12345");
+//        System.out.println(loginDao.update(login));
     }
 
     @Test
