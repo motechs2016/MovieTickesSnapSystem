@@ -15,6 +15,7 @@ public interface SnapRecordDao {
 
     /**
      * 插入抢购记录
+     *
      * @param snapRecord 抢购记录对象
      * @return 抢购记录编号
      */
@@ -22,6 +23,7 @@ public interface SnapRecordDao {
 
     /**
      * 更新抢购记录
+     *
      * @param snapRecord 抢购记录对象
      * @return 更新状态
      */
@@ -34,29 +36,37 @@ public interface SnapRecordDao {
 
     /**
      * 根据编号选择抢购记录
+     *
      * @param id 抢购记录编号
      * @return 抢购记录对象
      */
     @Cacheable(value = "SnapRecord", key = "'SnapRecord-id:'+#id")
     SnapRecord selectById(int id);
 
-    /**根据用户编号选择抢购记录
+    /**
+     * 根据用户编号选择抢购记录
+     *
      * @param uid 用户编号
      * @return 抢购记录
      */
     List<SnapRecord> selectByUid(int uid);
 
-    /**根据电影编号选择抢购记录
+    /**
+     * 根据电影编号选择抢购记录
+     *
      * @param movieId 电影编号
      * @return 抢购记录
      */
     List<SnapRecord> selectByMovieId(int movieId);
 
-    /**根据电影编号选择抢购记录
-     * @param uid 用户编号
+    /**
+     * 根据电影编号选择抢购记录
+     *
+     * @param uid     用户编号
      * @param movieId 电影编号
      * @return 抢购记录
      */
-    @Cacheable(value = "SnapRecord", key = "'SnapRecord-uid-movieId:'+#uid+'-'+#movieId") // 从数据库拿到结果存入缓存，下次直接拿缓存
-    SnapRecord selectByUidAndMovieId(int uid,int movieId);
+    @Cacheable(value = "SnapRecord", key = "'SnapRecord-uid-movieId:'+#uid+'-'+#movieId")
+    // 从数据库拿到结果存入缓存，下次直接拿缓存
+    SnapRecord selectByUidAndMovieId(int uid, int movieId);
 }

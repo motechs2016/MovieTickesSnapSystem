@@ -17,6 +17,7 @@ public class LoginDaoImpl implements LoginDao {
     @Autowired
     @Qualifier("dataNucleusDaoImpl")
     private DataNucleusDao dataNucleusDao;
+
     @Override
     public int insert(Login login) {
         return (int) dataNucleusDao.insert(login);
@@ -29,23 +30,23 @@ public class LoginDaoImpl implements LoginDao {
 
     @Override
     public Login selectById(int id) {
-        return dataNucleusDao.selectByPrimaryKey(Login.class,id);
+        return dataNucleusDao.selectByPrimaryKey(Login.class, id);
     }
 
     @Override
     public Login selectByUsername(String username) {
-        String query="username=='"+username.trim()+"'";
+        String query = "username=='" + username.trim() + "'";
         List<Login> logins = dataNucleusDao.selectByQuery(Login.class, query);
-        if (logins!=null&&!logins.isEmpty())
+        if (logins != null && !logins.isEmpty())
             return logins.get(0);
         return null;
     }
 
     @Override
     public Login selectByEmail(String email) {
-        String query=" email=='"+email.trim()+"'";
+        String query = " email=='" + email.trim() + "'";
         List<Login> logins = dataNucleusDao.selectByQuery(Login.class, query);
-        if (logins!=null&&!logins.isEmpty())
+        if (logins != null && !logins.isEmpty())
             return logins.get(0);
         return null;
     }

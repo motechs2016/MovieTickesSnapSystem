@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class MovieTickesSnapSystemApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MovieTickesSnapSystemApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MovieTickesSnapSystemApplication.class, args);
+    }
 }

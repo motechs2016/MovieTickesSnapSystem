@@ -14,6 +14,7 @@ public interface MovieTickeDao {
 
     /**
      * 插入电影票
+     *
      * @param movieTicke 电影票对象
      * @return 电影票编号
      */
@@ -21,6 +22,7 @@ public interface MovieTickeDao {
 
     /**
      * 更新电影票
+     *
      * @param movieTicke 电影票对象
      * @return 更新状态
      */
@@ -29,13 +31,16 @@ public interface MovieTickeDao {
 
     /**
      * 根据编号选择电影票
+     *
      * @param id 电影票编号
      * @return 电影票对象
      */
     @Cacheable(value = "MovieTicke", key = "'MovieTicke-id:'+#id")
     MovieTicke selectById(int id);
+
     /**
      * 获取所有电影票
+     *
      * @return 电影票对象列表
      */
     List<MovieTicke> selectAll();

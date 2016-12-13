@@ -1,7 +1,6 @@
 package com.cpt.movie.cache.redis;
 
 import com.cpt.movie.cache.redis.mapper.CustomerObjectMapper;
-import com.cpt.movie.pojo.Login;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,15 +15,8 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
-import org.springframework.data.redis.serializer.OxmSerializer;
-import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 
-import javax.xml.bind.Marshaller;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by cpt72 on 2016/12/12.

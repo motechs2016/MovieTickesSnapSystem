@@ -2,8 +2,6 @@ package com.cpt.movie.dto;
 
 import com.cpt.movie.pojo.SnapRecord;
 
-import java.util.List;
-
 /**
  * 抢购消息DTO
  * Created by cpt72 on 2016/12/12.

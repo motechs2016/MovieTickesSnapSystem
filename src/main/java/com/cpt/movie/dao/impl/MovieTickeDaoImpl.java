@@ -17,6 +17,7 @@ public class MovieTickeDaoImpl implements MovieTickeDao {
     @Autowired
     @Qualifier("dataNucleusDaoImpl")
     private DataNucleusDao dataNucleusDao;
+
     @Override
     public int insert(MovieTicke movieTicke) {
         return (int) dataNucleusDao.insert(movieTicke);
@@ -29,12 +30,12 @@ public class MovieTickeDaoImpl implements MovieTickeDao {
 
     @Override
     public MovieTicke selectById(int id) {
-        return dataNucleusDao.selectByPrimaryKey(MovieTicke.class,id);
+        return dataNucleusDao.selectByPrimaryKey(MovieTicke.class, id);
     }
 
     @Override
     public List<MovieTicke> selectAll() {
-        return dataNucleusDao.selectByQuery(MovieTicke.class,"");
+        return dataNucleusDao.selectByQuery(MovieTicke.class, "");
     }
 
 }

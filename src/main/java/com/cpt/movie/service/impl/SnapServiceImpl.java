@@ -36,55 +36,54 @@ public class SnapServiceImpl implements SnapService {
 
     @Override
     public SnapMessageDto snapMovie(int uid, int movieId, String md5) {
-        return snapMovie(uid,movieId,md5,1);
+        return snapMovie(uid, movieId, md5, 1);
     }
 
     @Override
     public SnapMessageDto snapMovie(int uid, int movieId, String md5, int num) {
-        if(uid<=0||movieId<=0){
+        if (uid <= 0 || movieId <= 0) {
             //参数不正确
             return new SnapMessageDto(SnapResultEnum.PARAM_ERROR);
         }
-        if(md5==null||!md5.equals(getMovieMd5(movieId))){
+        if (md5 == null || !md5.equals(getMovieMd5(movieId))) {
             //校验码不正确
             return new SnapMessageDto(SnapResultEnum.MOVIE_MD5_ERROR);
         }
         MovieTicke movieTicke = movieTickeDao.selectById(movieId);
-        if (movieTicke==null){
+        if (movieTicke == null) {
             //电影票不存在
             return new SnapMessageDto(SnapResultEnum.MOVIE_TICKE_NOT_EXIST);
         }
         Date date = new Date();
-        if (movieTicke.getStartTime().after(date)){
+        if (movieTicke.getStartTime().after(date)) {
             //抢购没有开始
             return new SnapMessageDto(SnapResultEnum.SNAP_NOT_BEGIN);
-        }else if(movieTicke.getEndTime().before(date)){
+        } else if (movieTicke.getEndTime().before(date)) {
             //抢购已经结束
             return new SnapMessageDto(SnapResultEnum.SNAP_CLOSED);
         }
         SnapRecord snapRecord = snapRecordDao.selectByUidAndMovieId(uid, movieId);
 
-        if(snapRecord!=null)
-        {
+        if (snapRecord != null) {
             //已经参与抢购
-            return new SnapMessageDto(SnapResultEnum.REPEAT_SNOP,snapRecord);
+            return new SnapMessageDto(SnapResultEnum.REPEAT_SNOP, snapRecord);
         }
         //执行抢购 默认数量1
-        int result=snopProcesureDao.callSnopProc(uid,movieId,num);
+        int result = snopProcesureDao.callSnopProc(uid, movieId, num);
 
-        return  new SnapMessageDto(SnapResultEnum.getStatus(result),snapRecordDao.selectByUidAndMovieId(uid, movieId));
+        return new SnapMessageDto(SnapResultEnum.getStatus(result), snapRecordDao.selectByUidAndMovieId(uid, movieId));
     }
 
     @Override
     public MovieDTO getMovieTicke(int movieId) {
-        MovieDTO movieDTO=new MovieDTO();
+        MovieDTO movieDTO = new MovieDTO();
         MovieTicke movieTicke = movieTickeDao.selectById(movieId);
         movieDTO.setMovieTicke(movieTicke);
 
-        if (movieTicke!=null){
+        if (movieTicke != null) {
             Date date = new Date();
             movieDTO.setNowTime(date);
-            if(movieTicke.getStartTime().before(date)&&movieTicke.getEndTime().after(date)){
+            if (movieTicke.getStartTime().before(date) && movieTicke.getEndTime().after(date)) {
                 movieDTO.setMd5(getMovieMd5(movieId));
             }
         }
@@ -96,8 +95,8 @@ public class SnapServiceImpl implements SnapService {
         return movieTickeDao.selectAll();
     }
 
-    private String getMovieMd5(int movieId){
-        String slat="dj7#t4*8hfdh8&(9936648%9057^hj";
-        return DigestUtils.md5DigestAsHex((slat+movieId).getBytes());
+    private String getMovieMd5(int movieId) {
+        String slat = "dj7#t4*8hfdh8&(9936648%9057^hj";
+        return DigestUtils.md5DigestAsHex((slat + movieId).getBytes());
     }
 }

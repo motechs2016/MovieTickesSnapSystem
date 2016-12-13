@@ -31,6 +31,7 @@ public class LoginController {
 
     /**
      * 登录接口
+     *
      * @param email 电子邮箱
      * @return 登录状态
      */
@@ -54,6 +55,7 @@ public class LoginController {
 
     /**
      * 检查登录状态接口
+     *
      * @return 已经登录的电子邮箱
      */
     @RequestMapping(value = "checkLogin")

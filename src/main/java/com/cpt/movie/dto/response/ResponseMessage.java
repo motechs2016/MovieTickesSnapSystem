@@ -1,7 +1,5 @@
 package com.cpt.movie.dto.response;
 
-import java.io.Serializable;
-
 /**
  * 响应信息
  * Created by cpt72 on 2016/12/12.
@@ -11,7 +9,7 @@ public class ResponseMessage {
     /**
      * 响应状态
      */
-    private boolean status=true;
+    private boolean status = true;
     /**
      * 响应数据
      */
