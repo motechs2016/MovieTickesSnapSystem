@@ -20,6 +20,8 @@
             <property name="javax.jdo.option.Mapping" value="mysql"/>
 
             <property name="datanucleus.schema.autoCreateAll" value="true"/>
+            <!--禁用二级缓存-->
+            <property name="datanucleus.cache.level2.type" value="none"/>
         </properties>
     </persistence-unit>
 

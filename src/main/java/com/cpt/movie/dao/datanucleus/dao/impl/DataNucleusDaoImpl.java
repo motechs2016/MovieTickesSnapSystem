@@ -29,6 +29,7 @@ public class DataNucleusDaoImpl implements DataNucleusDao {
     @Override
     public <T> T selectByPrimaryKey(Class<T> var, Object key) {
         PersistenceManager pm = persistenceManagerFactory.getPersistenceManager();
+
         T result = null;
         try {
             result = pm.getObjectById(var, key);
@@ -44,6 +45,7 @@ public class DataNucleusDaoImpl implements DataNucleusDao {
 
     @Override
     public <T> List<T> selectByQuery(Class<T> var, String query) {
+
         PersistenceManager pm = persistenceManagerFactory.getPersistenceManager();
         List<T> list = null;
         try {

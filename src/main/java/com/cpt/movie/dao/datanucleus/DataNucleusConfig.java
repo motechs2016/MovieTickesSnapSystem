@@ -2,6 +2,7 @@ package com.cpt.movie.dao.datanucleus;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManagerFactory;
@@ -20,6 +21,7 @@ public class DataNucleusConfig {
      * @return PersistenceManagerFactory对象
      */
     @Bean
+    @Scope
     public PersistenceManagerFactory getPersistenceManagerFactory() {
         return JDOHelper.getPersistenceManagerFactory("Tutorial");
     }

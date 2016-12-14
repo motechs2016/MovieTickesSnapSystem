@@ -1,5 +1,8 @@
 package com.cpt.movie.dao;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+
 /**
  * 抢购事务持久层
  * Created by cpt72 on 2016/12/12.
@@ -13,5 +16,6 @@ public interface SnopProcesureDao {
      * @param num     抢购数量
      * @return 抢购状态
      */
+    @CacheEvict(value = "MovieTicke", key = "'MovieTicke-id:'+#movieId", beforeInvocation = true)
     int callSnopProc(int uid, int movieId, int num);
 }

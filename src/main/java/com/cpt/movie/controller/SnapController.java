@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -99,12 +100,14 @@ public class SnapController {
      */
     @ResponseBody
     @RequestMapping("/snap/{movieId}/{md5}")
-    public ResponseMessage snapMovieTicke(@PathVariable Integer movieId, @PathVariable String md5, HttpSession session) {
+    public ResponseMessage snapMovieTicke(@PathVariable Integer movieId, @PathVariable String md5,
+                                          HttpSession session) {
         logger.debug("enter into snapMovieTicke movieId=" + movieId + " md5=" + md5);
         ResponseMessage responseMessage = new ResponseMessage();
         Object uid = session.getAttribute("uid");
         if (uid == null) {
             session.removeAttribute("email");
+
             responseMessage.setStatus(false);
             responseMessage.setErrorCode(1);
             responseMessage.setData("未登录，请重新登录...");
