@@ -1,19 +1,98 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <title>电影票抢购详情</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <link href="" rel="stylesheet"/>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css"/>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+    <script th:src="@{/js/jquery.countdown.min.js}"></script>
+
+    <script src="http://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+    <script src="http://cdn.bootcss.com/vue/2.1.4/vue.min.js"></script>
+
+    <script type="text/javascript" th:src="@{/js/detail.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
 </head>
 <body>
-<div th:if="${movieTicke}">
-    <h1 th:text="${movieTicke.name} " ></h1>
-    <h4 th:text="${movieTicke.num}"></h4>
-    <h4 th:text="${#dates.format(movieTicke.addTime, 'yyyy-MM-dd HH:mm:ss')}"></h4>
-    <h4 th:text="${#dates.format(movieTicke.startTime, 'yyyy-MM-dd HH:mm:ss')}"></h4>
-    <h4 th:text="${#dates.format(movieTicke.endTime, 'yyyy-MM-dd HH:mm:ss')}"></h4>
+<div class="container">
+    <div class="panel">
+        <div class="row">
+            <div class="span12">
+                <h2 class="text-center">
+                    电影票抢购详情
+                </h2>
+            </div>
+        </div>
+
+        <div class="row" th:if="${movieTicke}">
+            <input type="hidden" th:value="${movieTicke.id} " id="movieTickeId"/>
+            <div class="col-md-6" id="movie_item">
+                <div class="page-header">
+                    <h2>
+                        电影:<span v-text="name" th:text="${movieTicke.name} "></span>
+                    </h2>
+                </div>
+                <dl class="dl-horizontal">
+                    <dt>数量</dt>
+                    <dd v-text="num" id="m_num"></dd>
+                    <dt>创建时间</dt>
+                    <dd v-text="add"></dd>
+                    <dt>开始时间</dt>
+                    <dd v-text="start"></dd>
+                    <dt>结束时间</dt>
+                    <dd v-text="end"></dd>
+                </dl>
+            </div>
+            <div class="col-md-6">
+                <h3 id="info"></h3>
+                <button class="btn btn-large" type="button" id="button"></button>
+            </div>
+        </div>
+        <!-- 页面请求错误信息 -->
+        <div class="row" th:if="${error}">
+            <div class="span12">
+                <h4 class="text-center" th:text="${error} ">
+                </h4>
+            </div>
+        </div>
+    </div>
 </div>
-<div th:if="${error}">
-    <h4 th:text="${error} " ></h4>
+<!-- 弹出层 -->
+<div class="modal fade" id="ResultInfo">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span></button>
+                <h3 class="modal-title">抢购结果</h3>
+            </div>
+            <div class="modal-body">
+                <h2 v-text="message"></h2>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script type="text/javascript">
+    $(function () {
+        ticket_module.url.movieMd5Url = "/movieMd5/" + $("#movieTickeId").val();
+        ticket_module.getMovieDetail();
+    })
+    $("#button").on('click', function () {
+        ticket_module.snap();
+    });
+</script>
 </body>
 </html>

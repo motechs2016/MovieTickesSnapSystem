@@ -7,7 +7,7 @@ package com.cpt.movie.dto;
 public enum SnapResultEnum {
     NOT_ENOUGH(-3, "库存不足！"),
     SNOP_FAIL(-2, "抢购失败！"),
-    REPEAT_SNOP(-1, "重复抢购！"),
+    REPEAT_SNAP(-1, "重复抢购！"),
     SNOP_ERROR(0, "抢购错误！"),
     SUCCESS(1, "抢购成功！"),
     PARAM_ERROR(2, "参数错误！"),

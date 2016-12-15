@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * 登录相关web接口
@@ -41,6 +43,13 @@ public class LoginController {
         logger.debug("enter into snapMovieTicke email=" + email);
         ResponseMessage responseMessage = new ResponseMessage();
         try {
+            String pattern = "^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\\.([a-zA-Z0-9_-])+)+$";
+            Pattern r = Pattern.compile(pattern);
+            Matcher m = r.matcher(email);
+            if(!m.matches()){
+                throw new Exception("邮箱格式不正确！");
+            }
+
             int uid = loginService.loginByEmail(email);
             session.setAttribute("uid", uid);
             session.setAttribute("email", email);

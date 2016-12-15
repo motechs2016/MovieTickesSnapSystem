@@ -9,18 +9,23 @@
 
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+    <script src="http://cdn.bootcss.com/vue/2.1.4/vue.min.js"></script>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
 <div class="container">
     <div class="panel">
-        <div class="panel-heading">
-            <h1 style="display: inline-block; text-align: center">电影票抢购列表</h1>
-            <div style="display: inline-block; text-align: right;">
+        <div class="panel-heading" style="position: relative">
+            <h1>电影票抢购列表</h1>
+            <div class="userpanel">
                 <label>用户:<span id="user"></span></label>
+                <button id="logout" class="btn btn-danger">退出</button>
             </div>
         </div>
         <div class="panel-body">
-            <table class="table">
+            <table class="table" id="movieTable">
                 <thead>
                 <tr>
                     <th>电影名称</th>
@@ -33,13 +38,15 @@
                 </thead>
                 <tbody>
 
-                <tr th:each="ticke:${movieTickes} ">
+                <tr th:each="ticke:${movieTickes}" class="movieItem">
                     <th th:text="${ticke.name}"></th>
                     <th th:text="${ticke.num}"></th>
                     <!--<th th:text="${#dates.format(ticke.addTime, 'yyyy-MM-dd HH:mm:ss')}"></th>-->
-                    <th th:text="${#dates.format(ticke.startTime, 'yyyy-MM-dd HH:mm:ss')}"></th>
-                    <th th:text="${#dates.format(ticke.endTime, 'yyyy-MM-dd HH:mm:ss')}"></th>
-                    <th><a th:href="'/movie/'+${ticke.id}" href="" class="btn btn-info">点击查看</a></th>
+                    <th th:text="${#dates.format(ticke.startTime, 'yyyy-MM-dd HH:mm:ss')}" th:alt="${ticke.startTime}"
+                        class="start"></th>
+                    <th th:text="${#dates.format(ticke.endTime, 'yyyy-MM-dd HH:mm:ss')}" th:alt="${ticke.endTime}"
+                        class="end"></th>
+                    <th><a th:href="'/movie/'+${ticke.id}" class="btn status"></a></th>
                 </tr>
                 <!--<tr>-->
                 <!--<th>1</th>-->
@@ -76,15 +83,17 @@
 </div>
 <script>
     $(document).ready(function () {
+        $("#logout").hide();
         $.ajax({
             url: '/checkLogin',
             type: 'get',
             dataType: "json",
             success: function (result) {
-                if(result.status){
+                if (result.status) {
                     $("#user").html(result.data);
+                    $("#logout").show();
                 }
-                else{
+                else {
                     var userinfo = $("#userInfo");
                     userinfo.modal({
                         show: true,
@@ -99,22 +108,62 @@
         });
 
         $("#submit").click(function () {
+            var emailRE = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
             var email = $("#email").val();
-            $.ajax({
-                url: '/login',
-                data: {email: email},
-                type: 'post',
-                dataType: "json",
-                success: function () {
-                    $("#user").html(email);
-                    var userinfo = $("#userInfo");
-                    userinfo.modal('hide');
-                },
-                error: function () {
-                    console.error("login error!");
-                }
-            });
+            if (emailRE.test(email)) {
+                $.ajax({
+                    url: '/login',
+                    data: {email: email},
+                    type: 'post',
+                    dataType: "json",
+                    success: function () {
+                        $("#user").html(email);
+                        var userinfo = $("#userInfo");
+                        userinfo.modal('hide');
+                        $("#logout").show();
+                    },
+                    error: function () {
+                        console.error("login error!");
+                    }
+                });
+            } else {
+                alert("请输入正确邮箱格式！")
+            }
+
         });
+        $("#logout").click(function () {
+            window.location.href = "/logout";
+        })
+
+        var vm = new Vue({
+            el: '#movieTable',
+            methods: {
+                status: function (start, end) {
+                    var now = parseInt(new Date().getTime());
+                    if (start > now)
+                        return "未开始";
+                    else if (now > end)
+                        return "已结束";
+                    else
+                        return "正在抢购";
+                }
+            }
+        })
+
+        $(".movieItem").each(function () {
+            var start = new Date($(this).find(".start").attr("alt")).getTime();
+            var end = new Date($(this).find(".end").attr("alt")).getTime();
+            var now = parseInt(new Date().getTime());
+            if (start > now) {
+                $(this).find(".status").html("未开始").addClass("btn-info");
+            }
+            else if (now > end) {
+                $(this).find(".status").html("已结束").addClass("btn-danger");
+            }
+            else {
+                $(this).find(".status").html("正在抢购").addClass("btn-success");
+            }
+        })
     });
 
 </script>

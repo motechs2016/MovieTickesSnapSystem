@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 抢购相关web接口和页面
@@ -40,7 +42,13 @@ public class SnapController {
         try {
             List<MovieTicke> movieTickes = snapService.getAllMovieTicke();
             model.addAttribute("movieTickes", movieTickes);
-            model.addAttribute("name", "test");
+
+            Map<String, String> statusMap = new HashMap<>();
+            for (MovieTicke ticke : movieTickes) {
+                statusMap.put(ticke.getId() + "", getStatus(ticke));
+            }
+            model.addAttribute("statusMap", statusMap);
+
             logger.debug("movieTickes size=" + movieTickes.size() + "\n" + movieTickes);
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
@@ -105,7 +113,10 @@ public class SnapController {
         logger.debug("enter into snapMovieTicke movieId=" + movieId + " md5=" + md5);
         ResponseMessage responseMessage = new ResponseMessage();
         Object uid = session.getAttribute("uid");
-        if (uid == null) {
+        Object email = session.getAttribute("email");
+        if (uid == null||email==null) {
+            logger.debug("not login!");
+            session.removeAttribute("uid");
             session.removeAttribute("email");
 
             responseMessage.setStatus(false);
@@ -114,7 +125,7 @@ public class SnapController {
             return responseMessage;
         }
         try {
-            SnapMessageDto snapMessageDto = snapService.snapMovie((Integer) uid, movieId, md5);
+            SnapMessageDto snapMessageDto = snapService.snapMovie((Integer) uid, (String) email, movieId, md5);
             responseMessage.setData(snapMessageDto);
         } catch (Exception e) {
             responseMessage.setStatus(false);
@@ -122,5 +133,21 @@ public class SnapController {
             logger.error(e.getMessage(), e);
         }
         return responseMessage;
+    }
+
+    /**
+     * 判断电影票抢购状态
+     *
+     * @param ticke 电影票对象
+     * @return 返回状态字符串
+     */
+    private String getStatus(MovieTicke ticke) {
+        Date date = new Date();
+        if (ticke.getStartTime().after(date))
+            return "未开始";
+        else if (ticke.getEndTime().before(date))
+            return "已结束";
+        else
+            return "正在抢购";
     }
 }
