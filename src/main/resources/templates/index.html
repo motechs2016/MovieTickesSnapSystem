@@ -12,6 +12,10 @@
 
     <script src="http://cdn.bootcss.com/vue/2.1.4/vue.min.js"></script>
 
+    <script src="http://cdn.bootcss.com/lodash.js/4.17.2/lodash.min.js"></script>
+
+    <script type="text/javascript"  th:src="@{/js/detail.js}"></script>
+
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
@@ -25,7 +29,7 @@
             </div>
         </div>
         <div class="panel-body">
-            <table class="table" id="movieTable">
+            <table class="table">
                 <thead>
                 <tr>
                     <th>电影名称</th>
@@ -36,17 +40,22 @@
                     <th>活动详情</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="movieTable">
 
-                <tr th:each="ticke:${movieTickes}" class="movieItem">
+<!--                <tr th:each="ticke:${movieTickes}" class="movieItem">
                     <th th:text="${ticke.name}"></th>
                     <th th:text="${ticke.num}"></th>
-                    <!--<th th:text="${#dates.format(ticke.addTime, 'yyyy-MM-dd HH:mm:ss')}"></th>-->
-                    <th th:text="${#dates.format(ticke.startTime, 'yyyy-MM-dd HH:mm:ss')}" th:alt="${ticke.startTime}"
-                        class="start"></th>
-                    <th th:text="${#dates.format(ticke.endTime, 'yyyy-MM-dd HH:mm:ss')}" th:alt="${ticke.endTime}"
-                        class="end"></th>
+                    &lt;!&ndash;<th th:text="${#dates.format(ticke.addTime, 'yyyy-MM-dd HH:mm:ss')}"></th>&ndash;&gt;
+                    <th th:text="${ticke.startTime}" class="start"></th>
+                    <th th:text="${ticke.endTime}" class="end"></th>
                     <th><a th:href="'/movie/'+${ticke.id}" class="btn status"></a></th>
+                </tr>-->
+                <tr v-for="item in sortmovies" class="movieItem">
+                    <th v-text="item.name"></th>
+                    <th v-text="item.num"></th>
+                    <th v-text="item.startTime" class="start"></th>
+                    <th v-text="item.endTime" class="end"></th>
+                    <th><a v-bind:href="item.url" class="btn" v-bind:class="item.style" v-text="item.text"></a></th>
                 </tr>
                 <!--<tr>-->
                 <!--<th>1</th>-->
@@ -89,11 +98,11 @@
             type: 'get',
             dataType: "json",
             success: function (result) {
-                if (result.status) {
+                if(result.status){
                     $("#user").html(result.data);
                     $("#logout").show();
                 }
-                else {
+                else{
                     var userinfo = $("#userInfo");
                     userinfo.modal({
                         show: true,
@@ -106,11 +115,63 @@
                 console.error("checkLogin error!");
             }
         });
+        $.ajax({
+            url:"/list",
+            success:function (data) {
+                console.log(data);
+                var a = [];
+                for(var i in data){
+                    var url = "/movie/"+data[i].id;
+                    var start = Math.round(data[i].startTime);
+                    var end = Math.round(data[i].endTime);
+                    var now= Math.round(new Date().getTime());
+                    if(start>now){
+                        var text = "未开始";
+                        var status = -1;
+                        var style = "btn-info";
+                    }
+                    else if(now>end){
+                        var text = "已结束";
+                        var status = 1
+                        var style = "btn-danger";
+                    }
+                    else{
+                        var text = "正在抢购";
+                        var status = 0
+                        var style = "btn-success";
+                    }
+                    var movie = {
+                        url:url,
+                        num:data[i].num,
+                        startTime:new Date(start).Format("yyyy/MM/dd hh:mm:ss"),
+                        endTime:new Date(end).Format("yyyy/MM/dd hh:mm:ss"),
+                        name:data[i].name,
+                        status:status,
+                        style:style,
+                        text:text
+                    };
+                    a.push(movie);
+                    console.log(movie);
+                }
+                console.log(a);
+                var vm = new Vue({
+                    el:"#movieTable",
+                    data:{
+                        movies:a
+                    },
+                    computed:{
+                        sortmovies:function () {
+                            return _.orderBy(this.movies, 'status')
+                        }
+                    }
+                })
+            }
+        });
 
         $("#submit").click(function () {
             var emailRE = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
             var email = $("#email").val();
-            if (emailRE.test(email)) {
+            if(emailRE.test(email)){
                 $.ajax({
                     url: '/login',
                     data: {email: email},
@@ -126,46 +187,14 @@
                         console.error("login error!");
                     }
                 });
-            } else {
+            }else{
                 alert("请输入正确邮箱格式！")
             }
-
         });
         $("#logout").click(function () {
             window.location.href = "/logout";
         })
-
-        var vm = new Vue({
-            el: '#movieTable',
-            methods: {
-                status: function (start, end) {
-                    var now = parseInt(new Date().getTime());
-                    if (start > now)
-                        return "未开始";
-                    else if (now > end)
-                        return "已结束";
-                    else
-                        return "正在抢购";
-                }
-            }
-        })
-
-        $(".movieItem").each(function () {
-            var start = new Date($(this).find(".start").attr("alt")).getTime();
-            var end = new Date($(this).find(".end").attr("alt")).getTime();
-            var now = parseInt(new Date().getTime());
-            if (start > now) {
-                $(this).find(".status").html("未开始").addClass("btn-info");
-            }
-            else if (now > end) {
-                $(this).find(".status").html("已结束").addClass("btn-danger");
-            }
-            else {
-                $(this).find(".status").html("正在抢购").addClass("btn-success");
-            }
-        })
     });
-
 </script>
 </body>
 </html>

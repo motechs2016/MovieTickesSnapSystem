@@ -38,23 +38,19 @@ public class SnapController {
      * 首页
      */
     @RequestMapping({"/", "/index", "/home"})
-    public String index(Model model) {
-        try {
-            List<MovieTicke> movieTickes = snapService.getAllMovieTicke();
-            model.addAttribute("movieTickes", movieTickes);
-
-            Map<String, String> statusMap = new HashMap<>();
-            for (MovieTicke ticke : movieTickes) {
-                statusMap.put(ticke.getId() + "", getStatus(ticke));
-            }
-            model.addAttribute("statusMap", statusMap);
-
-            logger.debug("movieTickes size=" + movieTickes.size() + "\n" + movieTickes);
-        } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
-            logger.error(e.getMessage(), e);
-        }
+    public String index() {
         return "index";
+    }
+
+    /**
+     * 获取电影票抢购列表
+     * @return 电影票抢购列表
+     */
+    @RequestMapping("list")
+    @ResponseBody
+    public List<MovieTicke> list() {
+        List<MovieTicke> movieTickes = snapService.getAllMovieTicke();
+        return movieTickes;
     }
 
     /**
@@ -114,7 +110,7 @@ public class SnapController {
         ResponseMessage responseMessage = new ResponseMessage();
         Object uid = session.getAttribute("uid");
         Object email = session.getAttribute("email");
-        if (uid == null||email==null) {
+        if (uid == null || email == null) {
             logger.debug("not login!");
             session.removeAttribute("uid");
             session.removeAttribute("email");

@@ -1,0 +1,9 @@
+.container{
+    background-color: #eeeeee;
+    box-shadow: 10px 10px 5px #888888;
+}
+.userpanel{
+    position: absolute;
+    top: 4rem;
+    right: 0;
+}

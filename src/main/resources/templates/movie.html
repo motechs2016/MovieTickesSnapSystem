@@ -15,13 +15,13 @@
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
-    <script th:src="@{/js/jquery.countdown.min.js}"></script>
+    <script th:src="@{/js/jquery.countdown.min.js}" ></script>
 
     <script src="http://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
     <script src="http://cdn.bootcss.com/vue/2.1.4/vue.min.js"></script>
 
-    <script type="text/javascript" th:src="@{/js/detail.js}"></script>
+    <script type="text/javascript"  th:src="@{/js/detail.js}"></script>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
 
 </head>
@@ -41,11 +41,11 @@
             <div class="col-md-6" id="movie_item">
                 <div class="page-header">
                     <h2>
-                        电影:<span v-text="name" th:text="${movieTicke.name} "></span>
+                        电影:<span v-text="name"  th:text="${movieTicke.name} "></span>
                     </h2>
                 </div>
                 <dl class="dl-horizontal">
-                    <dt>数量</dt>
+                    <dt >数量</dt>
                     <dd v-text="num" id="m_num"></dd>
                     <dt>创建时间</dt>
                     <dd v-text="add"></dd>
@@ -76,7 +76,7 @@
             <div class="modal-header">
                 <button class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span>
                     <span class="sr-only">Close</span></button>
-                <h3 class="modal-title">抢购结果</h3>
+                <h3 class="modal-title">秒杀结果</h3>
             </div>
             <div class="modal-body">
                 <h2 v-text="message"></h2>
@@ -87,11 +87,12 @@
 
 <script type="text/javascript">
     $(function () {
-        ticket_module.url.movieMd5Url = "/movieMd5/" + $("#movieTickeId").val();
+        ticket_module.url.movieMd5Url="/movieMd5/"+$("#movieTickeId").val();
         ticket_module.getMovieDetail();
     })
     $("#button").on('click', function () {
         ticket_module.snap();
+        $(this).attr("disabled",true);
     });
 </script>
 </body>

@@ -24,6 +24,7 @@ var ticket_module = {
             this.name = parems.name;
             this.md5 = parems.md5;
             this.show();
+            console.log(this);
         },
         // 详情页显示
         show: function () {
