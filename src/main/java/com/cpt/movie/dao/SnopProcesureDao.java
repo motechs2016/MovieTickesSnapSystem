@@ -16,6 +16,6 @@ public interface SnopProcesureDao {
      * @param num     抢购数量
      * @return 抢购状态
      */
-    @CacheEvict(value = "MovieTicke", key = "'MovieTicke-id:'+#movieId", beforeInvocation = true)
+//    @CacheEvict(value = "MovieTicke", key = "'MovieTicke-id:'+#movieId", beforeInvocation = true)
     int callSnopProc(int uid, int movieId, int num);
 }

@@ -131,6 +131,22 @@ public class SnapController {
         return responseMessage;
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/movieNum/{movieId}")
+    public ResponseMessage getMovieTickeNum(@PathVariable Integer movieId) {
+        logger.debug("enter into getMovieTickeNum movieId=" + movieId);
+        ResponseMessage responseMessage = new ResponseMessage();
+        try {
+            int movieTickeNum = snapService.getMovieTickeNum(movieId);
+            responseMessage.setData(movieTickeNum);
+        } catch (Exception e) {
+            responseMessage.setStatus(false);
+            responseMessage.setException(e.getMessage());
+            logger.error(e.getMessage(), e);
+        }
+        return responseMessage;
+    }
+
     /**
      * 判断电影票抢购状态
      *

@@ -38,4 +38,13 @@ public class MovieTickeDaoImpl implements MovieTickeDao {
         return dataNucleusDao.selectByQuery(MovieTicke.class, "");
     }
 
+    @Override
+    public int getMovieTickeNum(int id) {
+        MovieTicke ticke = dataNucleusDao.selectByPrimaryKey(MovieTicke.class, id);
+        if (ticke==null)
+            return 0;
+        else
+            return ticke.getNum();
+    }
+
 }

@@ -44,4 +44,12 @@ public interface MovieTickeDao {
      * @return 电影票对象列表
      */
     List<MovieTicke> selectAll();
+
+    /**
+     * 获取电影票数量信息
+     * @param id 电影票编号
+     * @return 数量
+     */
+    @Cacheable(value = "MovieTickeNum", key = "'MovieTickeNum-id:'+#id")
+    int getMovieTickeNum(int id);
 }

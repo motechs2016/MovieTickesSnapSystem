@@ -52,6 +52,12 @@ var ticket_module = {
             ticket_module.url.snapUrl="/snap/"+ticket_module.detail.id+"/"+md5;
             $("#button").html("点击秒杀").attr("disabled", false).addClass("btn-success");
             $("#info").html("活动进行中。。");
+            if(changenum){
+                clearInterval(changenum);
+            }
+            var changenum = setInterval(function () {
+                ticket_module.updateMovieNum($("#movieTickeId").val());
+            },3000);
         } else {
             // 活动未开始，显示倒计时
             if (now < start) {
@@ -144,6 +150,15 @@ var ticket_module = {
                 window.location.href = "/";
             }
         })
+    },
+    // 更新电影数量
+    updateMovieNum:function (movieId) {
+        $.get(
+            "/movieNum/"+movieId,
+            function (data) {
+                $("#m_num").html(data.data);
+            }
+        )
     }
 }
 Date.prototype.Format = function (fmt) {

@@ -17,6 +17,8 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by cpt72 on 2016/12/12.
@@ -45,6 +47,9 @@ public class RedisConfig extends CachingConfigurerSupport {
     public CacheManager cacheManager(RedisTemplate redisTemplate) {
         RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);
         cacheManager.setDefaultExpiration(600); //设置key-value超时时间
+        Map<String,Long> map=new HashMap<>();
+        map.put("MovieTickeNum",3L);//设置余票缓存3秒
+        cacheManager.setExpires(map);
         return cacheManager;
     }
 

@@ -134,6 +134,11 @@ public class SnapServiceImpl implements SnapService {
         return movieTickeDao.selectAll();
     }
 
+    @Override
+    public int getMovieTickeNum(int id) {
+        return movieTickeDao.getMovieTickeNum(id);
+    }
+
     private String getMovieMd5(int movieId) {
         String slat = "dj7#t4*8hfdh8&(9936648%9057^hj";
         return DigestUtils.md5DigestAsHex((slat + movieId).getBytes());
