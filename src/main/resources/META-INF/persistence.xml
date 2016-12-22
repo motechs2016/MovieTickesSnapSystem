@@ -5,9 +5,9 @@
 
     <!-- Tutorial "unit" -->
     <persistence-unit name="Tutorial">
-        <class>com.cpt.movie.pojo.Login</class>
-        <class>com.cpt.movie.pojo.MovieTicke</class>
-        <class>com.cpt.movie.pojo.SnapRecord</class>
+        <class>lab.io.rush.pojo.Login</class>
+        <class>lab.io.rush.pojo.MovieTicke</class>
+        <class>lab.io.rush.pojo.SnapRecord</class>
         <exclude-unlisted-classes/>
         <properties>
 
